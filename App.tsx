@@ -42,7 +42,7 @@ const Navigation: React.FC<{ isOpen: boolean; toggle: () => void; isScrolled: bo
   {[
     { label: "会社情報", id: "company" },
     { label: "会社理念", id: "philosophy" },
-    { label: "運営紹介", href: "./operator.html" },
+    { label: "運営紹介", href: "/operator.html" },
     { label: "サービス案内", id: "services" },
     { label: "問い合わせ", id: "contact" },
   ].map((item) => (
