@@ -1,9 +1,0 @@
-{
-  "rewrites": [
-    { "source": "/operator.html", "destination": "/operator.html" },
-    { "source": "/company.html", "destination": "/company.html" },
-    { "source": "/privacy-policy.html", "destination": "/privacy-policy.html" },
-    { "source": "/tokushoho.html", "destination": "/tokushoho.html" },
-    { "source": "/(.*)", "destination": "/" }
-  ]
-}
