@@ -1,107 +1,202 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowDown } from 'lucide-react';
-import MetallicLogo from './components/MetallicLogo';
+import React, { useEffect, useMemo, useState } from "react";
+import { Menu, X, ArrowDown, ChevronDown } from "lucide-react";
+import MetallicLogo from "./components/MetallicLogo";
 import Footer from "./components/Footer";
-import FadeIn from './components/FadeIn';
+import FadeIn from "./components/FadeIn";
 
-// --- Components defined within App to share context if needed, or keeping file count low per instructions ---
+// --- Navigation ---
 
-const Navigation: React.FC<{ isOpen: boolean; toggle: () => void; isScrolled: boolean }> = ({ isOpen, toggle, isScrolled }) => (
-  <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-white/80 backdrop-blur-md border-b border-gray-100 py-4' : 'bg-transparent py-6'}`}>
+const Navigation: React.FC<{
+  isOpen: boolean;
+  toggle: () => void;
+  isScrolled: boolean;
+}> = ({ isOpen, toggle, isScrolled }) => (
+  <nav
+    className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
+      isScrolled
+        ? "bg-white/80 backdrop-blur-md border-b border-gray-100 py-4"
+        : "bg-transparent py-6"
+    }`}
+  >
     <div className="container mx-auto px-6 flex justify-between items-center">
-      <div className={`font-cinzel text-lg tracking-widest transition-opacity duration-300 ${isScrolled ? 'opacity-100' : 'opacity-0'}`}>
+      <div
+        className={`font-cinzel text-lg tracking-widest transition-opacity duration-300 ${
+          isScrolled ? "opacity-100" : "opacity-0"
+        }`}
+      >
         MOMENTORY
       </div>
-      
+
       <button onClick={toggle} className="group flex items-center gap-2 focus:outline-none">
         <span className="font-lato text-xs tracking-[0.2em] uppercase text-gray-500 group-hover:text-black transition-colors hidden md:block">
-          {isOpen ? 'Close' : 'Menu'}
+          {isOpen ? "Close" : "Menu"}
         </span>
         <div className="relative p-2">
-           {isOpen ? <X className="w-6 h-6 text-gray-800" /> : <Menu className="w-6 h-6 text-gray-800" />}
+          {isOpen ? <X className="w-6 h-6 text-gray-800" /> : <Menu className="w-6 h-6 text-gray-800" />}
         </div>
       </button>
     </div>
 
     {/* Right Sidebar Menu */}
-<div
-  className={`fixed inset-0 z-40 transition-opacity duration-500
-  ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
->
-  {/* 背景 */}
-  <div className="absolute inset-0 bg-white"></div>
+    <div
+      className={`fixed inset-0 z-40 transition-opacity duration-500 ${
+        isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+      }`}
+    >
+      {/* 背景 */}
+      <div className="absolute inset-0 bg-white"></div>
 
-  {/* 右サイドバー */}
-  <div
-    className={`absolute top-0 right-0 h-full w-[75%] sm:w-[60%] md:w-[40%] bg-white
-    transition-transform duration-700 ease-[cubic-bezier(0.76,0,0.24,1)]
-    ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
-  >
-    <div className="h-full flex flex-col justify-center px-10 md:px-16">
-      <ul className="space-y-6 text-right">
-  {[
-    { label: "会社情報", id: "company" },
-    { label: "会社理念", id: "philosophy" },
-    { label: "運営紹介", href: "/operator.html" },
-    { label: "サービス案内", id: "services" },
-    { label: "問い合わせ", id: "contact" },
-  ].map((item) => (
-    <li key={item.id ?? item.href}>
-      <a
-  href={item.href ?? `#${item.id}`}
-  onClick={(e) => {
-    if (item.href) {
-      e.preventDefault();                 // ブラウザ遷移を止める
-      window.location.assign(item.href);  // JSで即遷移（確実）
-      return;
-    }
-    toggle(); // ページ内リンクだけメニュー閉じる
-  }}
-  className="block text-xs md:text-sm font-noto-serif text-gray-900 hover:opacity-70"
->
-  {item.label}
-</a>
-
-
-
-    </li>
-  ))}
-</ul>
-
-
+      {/* 右サイドバー */}
+      <div
+        className={`absolute top-0 right-0 h-full w-[75%] sm:w-[60%] md:w-[40%] bg-white
+        transition-transform duration-700 ease-[cubic-bezier(0.76,0,0.24,1)]
+        ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+      >
+        <div className="h-full flex flex-col justify-center px-10 md:px-16">
+          <ul className="space-y-6 text-right">
+            {[
+              { label: "会社情報", id: "company" },
+              { label: "会社理念", id: "philosophy" },
+              { label: "運営紹介", href: "/operator.html" },
+              { label: "サービス案内", id: "services" },
+              { label: "問い合わせ", id: "contact" },
+            ].map((item) => (
+              <li key={item.id ?? item.href}>
+                <a
+                  href={item.href ?? `#${item.id}`}
+                  onClick={(e) => {
+                    if (item.href) {
+                      e.preventDefault();
+                      window.location.assign(item.href);
+                      return;
+                    }
+                    toggle();
+                  }}
+                  className="block text-xs md:text-sm font-noto-serif text-gray-900 hover:opacity-70"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-
   </nav>
 );
 
-const Section: React.FC<{ id?: string; className?: string; children: React.ReactNode }> = ({ id, className = '', children }) => (
+// --- Section Wrapper ---
+
+const Section: React.FC<{ id?: string; className?: string; children: React.ReactNode }> = ({
+  id,
+  className = "",
+  children,
+}) => (
   <section id={id} className={`py-20 md:py-32 px-6 md:px-12 max-w-7xl mx-auto ${className}`}>
     {children}
   </section>
 );
+
+// --- Types ---
+
+type Service = {
+  id: string;
+  no: "01" | "02" | "03";
+  title: string;
+  image: string;
+
+  // カードの短文（最初に見えるやつ）
+  summary: string;
+
+  // アコーディオンで見せる長文（改行あり）
+  body: string;
+
+  bulletsTitle?: string;
+  bullets?: string[];
+
+  noteTitle?: string;
+  note?: string;
+};
+
+// --- App ---
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
+  // アコーディオン：開いているサービス番号
+  const [openService, setOpenService] = useState<Service["no"] | null>(null);
+
+  // サービス定義（文章はそのまま・改行保持）
+  const services: Service[] = useMemo(
+    () => [
+      {
+        id: "service1",
+        no: "01",
+        title: "オンライン学習塾の運営（FX専門教育）",
+        image: "/services1.jpg",
+        summary: "FXを再現可能なスキルとして身につけるためのオンライン学習環境を提供します。",
+        body: `会員専用サイト内にて、動画・テキストなどの学習コンテンツを一括管理・配信。
+学習だけで終わらせず、会員様からの質問や相談に対しても細かな内容まで精査し、
+適切な投資活動が行えるよう継続的なサポートを行います。`,
+        bulletsTitle: "提供内容",
+        bullets: [
+          "会員専用サイトでの学習コンテンツ配信（動画・テキスト）",
+          "段階的に学べるカリキュラム設計",
+          "投資判断に関する質問対応・サポート",
+        ],
+        noteTitle: "運営事業",
+        note: "FXの専門学校（オンライン）",
+      },
+      {
+        id: "service2",
+        no: "02",
+        title: "コンサルティング事業",
+        image: "/services2.jpg",
+        summary: "WEB集客・マネタイズ・経営戦略を軸に、事業の仕組みづくりを支援します。",
+        body: `個人・法人問わず、現状の課題を整理し、
+「何を」「どの順番で」「どのように実行するか」を明確にした上で、
+実行可能な戦略として落とし込みます。`,
+        bulletsTitle: "主な支援内容",
+        bullets: [
+          "WEB集客の戦略設計（SNS・広告・導線構築）",
+          "マネタイズ設計・商品設計",
+          "経営・事業戦略に関するアドバイス",
+          "仕組み化・再現性を重視した改善提案",
+        ],
+      },
+      {
+        id: "service3",
+        no: "03",
+        title: "コンテンツ販売・プロデュース事業",
+        image: "/services3.jpg",
+        summary: "知識・経験・ノウハウを「価値ある商品」として市場に届けるための支援を行います。",
+        body: `商品企画から、WEBマーケティングを活用した販売設計までを一貫して対応。
+文章・動画・音声など、目的に応じた形式でコンテンツを制作・販売します。`,
+        bulletsTitle: "提供内容",
+        bullets: [
+          "コンテンツ・商品企画",
+          "販売導線の設計（WEB／SNS／動画）",
+          "マーケティング視点での商品設計",
+          "継続的に販売できる仕組みづくり",
+        ],
+      },
+    ],
+    []
+  );
+
   // Handle Loading Animation
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2500);
+    const timer = setTimeout(() => setLoading(false), 2500);
     return () => clearTimeout(timer);
   }, []);
 
   // Handle Scroll
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Loading Screen
@@ -111,9 +206,9 @@ const App: React.FC = () => {
         <div className="scale-100 opacity-0 animate-[fadeInScale_0.8s_ease-out_forwards]">
           <MetallicLogo size="md" animated={true} />
         </div>
-        
+
         <div className="mt-12 h-px w-32 md:w-48 bg-gray-200 overflow-hidden relative">
-           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-600 to-transparent w-1/2 -translate-x-full animate-[loadingBar_1.5s_infinite]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-600 to-transparent w-1/2 -translate-x-full animate-[loadingBar_1.5s_infinite]" />
         </div>
 
         <style>{`
@@ -137,12 +232,14 @@ const App: React.FC = () => {
       {/* Hero Section */}
       <header className="relative h-screen flex flex-col items-center justify-center overflow-hidden">
         <FadeIn delay={200}>
-           <MetallicLogo size="xl" />
+          <MetallicLogo size="xl" />
         </FadeIn>
-        
+
         <FadeIn delay={1000} className="absolute bottom-24 md:bottom-32 text-center px-4">
           <h2 className="font-noto-serif text-sm md:text-base tracking-[0.2em] leading-loose text-gray-600">
-            決断という一瞬の輝きを、<br className="md:hidden" />永続的な市場価値と、<br className="md:hidden" />未来の確かな舞台に変える。
+            決断という一瞬の輝きを、<br className="md:hidden" />
+            永続的な市場価値と、<br className="md:hidden" />
+            未来の確かな舞台に変える。
           </h2>
           <p className="mt-4 font-cinzel text-xs text-gray-400 tracking-widest">
             Transforming the momentary brilliance of decision into lasting market value.
@@ -156,11 +253,9 @@ const App: React.FC = () => {
 
       {/* Philosophy / Concept Section */}
       <Section id="philosophy" className="relative">
-        {/* Background decorative vertical line */}
         <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gray-200 -z-10 hidden md:block"></div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-24 md:gap-12">
-          {/* Moment */}
           <div className="flex flex-col items-center md:items-end text-center md:text-right space-y-6">
             <FadeIn>
               <h3 className="font-cinzel text-5xl md:text-7xl text-gray-100 relative inline-block">
@@ -174,16 +269,15 @@ const App: React.FC = () => {
               <h4 className="text-lg font-bold mb-4 tracking-widest">決断の一瞬</h4>
               <p className="text-gray-600 leading-8 text-sm md:text-base max-w-md">
                 <span className="font-bold block mb-2">Moment of Truth</span>
-                顧客が「良い・悪い」を判断する決定的瞬間。<br/>
-                Micro-moments：欲求が生まれ、行動する小さな瞬間。<br/>
+                顧客が「良い・悪い」を判断する決定的瞬間。<br />
+                Micro-moments：欲求が生まれ、行動する小さな瞬間。<br />
                 私たちは、顧客の心が動く決定の瞬間をデザインします。
               </p>
             </FadeIn>
           </div>
 
-          {/* Entry */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-6 mt-12 md:mt-32">
-             <FadeIn>
+            <FadeIn>
               <h3 className="font-cinzel text-5xl md:text-7xl text-gray-100 relative inline-block">
                 02
                 <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl md:text-3xl text-gray-800 font-medium tracking-widest text-metallic">
@@ -195,8 +289,8 @@ const App: React.FC = () => {
               <h4 className="text-lg font-bold mb-4 tracking-widest">未来への入口</h4>
               <p className="text-gray-600 leading-8 text-sm md:text-base max-w-md">
                 <span className="font-bold block mb-2">Entry Point</span>
-                新しい市場への参入。<br/>
-                顧客との接点・チャンスの入り口。<br/>
+                新しい市場への参入。<br />
+                顧客との接点・チャンスの入り口。<br />
                 挑戦者を次のステージへ運ぶ「確かな入口」をつくります。
               </p>
             </FadeIn>
@@ -211,7 +305,7 @@ const App: React.FC = () => {
             <p className="font-cinzel text-3xl md:text-5xl text-metallic leading-tight mb-12">
               "Turning moments of decision <br /> into lasting market value."
             </p>
-            
+
             <div className="space-y-6 text-gray-800">
               <p className="font-noto-serif text-lg md:text-2xl font-medium leading-relaxed">
                 若者の「なりたい」という決断を、<br className="md:hidden" />
@@ -233,53 +327,129 @@ const App: React.FC = () => {
       {/* Services Section */}
       <Section id="services">
         <div className="flex flex-col items-center mb-16">
-           <span className="font-cinzel text-gray-400 tracking-[0.3em] mb-2">OUR EXPERTISE</span>
-           <h2 className="font-serif text-3xl md:text-4xl text-gray-800">Services</h2>
+          <span className="font-cinzel text-gray-400 tracking-[0.3em] mb-2">OUR EXPERTISE</span>
+          <h2 className="font-serif text-3xl md:text-4xl text-gray-800">Services</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-           {[
-             { title: "Branding", desc: "瞬間の価値を永続的なブランドへ。" },
-             { title: "Digital Experience", desc: "感情を動かすデジタル接点の構築。" },
-             { title: "Market Entry", desc: "新規事業・市場参入の戦略設計。" }
-           ].map((service, idx) => (
-             <FadeIn key={idx} delay={idx * 100} className="group p-8 border border-gray-100 hover:border-gray-300 transition-colors duration-500 bg-white/40 hover:bg-white/80 backdrop-blur-sm">
-                <div className="h-full flex flex-col justify-between">
-                  <div>
-                    <span className="font-cinzel text-4xl text-gray-200 group-hover:text-gray-400 transition-colors">0{idx + 1}</span>
-                    <h3 className="mt-6 text-xl font-serif font-medium mb-4">{service.title}</h3>
-                    <p className="text-gray-500 text-sm leading-relaxed">{service.desc}</p>
+          {services.map((service, idx) => {
+            const isOpen = openService === service.no;
+
+            return (
+              <FadeIn
+                key={service.id}
+                delay={idx * 100}
+                className="group border border-gray-100 hover:border-gray-300 transition-colors duration-500 bg-white/40 hover:bg-white/80 backdrop-blur-sm overflow-hidden"
+              >
+                {/* クリック領域（画像の上にテキストを置かない） */}
+                <button
+                  type="button"
+                  onClick={() => setOpenService(isOpen ? null : service.no)}
+                  className="w-full text-left"
+                  aria-expanded={isOpen}
+                  aria-controls={`${service.id}-detail`}
+                >
+                  {/* image：文字なし */}
+                  <div className="relative h-44 md:h-48 w-full">
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                      loading="lazy"
+                    />
                   </div>
-                  <div className="mt-8 w-8 h-px bg-gray-300 group-hover:w-full transition-all duration-500"></div>
-                </div>
-             </FadeIn>
-           ))}
+
+                  {/* 画像の下：中央揃えでわかりやすく */}
+                  <div className="p-8 text-center">
+                    <div className="font-cinzel text-2xl md:text-3xl text-gray-300 mb-2">
+                      {service.no}
+                    </div>
+
+                    <h3 className="text-lg md:text-xl font-serif font-medium mb-3 text-gray-900">
+                      {service.title}
+                    </h3>
+
+                    <p className="text-gray-500 text-sm leading-relaxed">
+                      {service.summary}
+                    </p>
+
+                    <div className="mt-6 flex items-center justify-center gap-2 text-xs tracking-[0.25em] uppercase text-gray-400">
+                      <span>{isOpen ? "Close" : "Details"}</span>
+                      <ChevronDown
+                        className={`w-4 h-4 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+                      />
+                    </div>
+                  </div>
+                </button>
+
+                {/* accordion body（全文表示・改行保持） */}
+                {isOpen && (
+                  <div
+                    id={`${service.id}-detail`}
+                    className="px-8 pb-10 -mt-2 text-sm text-gray-700 leading-relaxed space-y-6"
+                  >
+                    <p className="whitespace-pre-line">
+                      {service.body}
+                    </p>
+
+                    {service.bulletsTitle && (
+                      <div>
+                        <div className="font-semibold text-gray-800 tracking-widest text-xs mb-3 text-center">
+                          {service.bulletsTitle}
+                        </div>
+                        <ul className="list-disc pl-5 space-y-2 text-gray-700 text-left">
+                          {(service.bullets ?? []).map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {service.noteTitle && service.note && (
+                      <div className="pt-4 border-t border-gray-200">
+                        <div className="font-semibold text-gray-800 tracking-widest text-xs mb-2 text-center">
+                          {service.noteTitle}
+                        </div>
+                        <p className="text-gray-600 text-center">
+                          {service.note}
+                        </p>
+                      </div>
+                    )}
+
+                    <div className="pt-4">
+                      <div className="mx-auto w-8 h-px bg-gray-300 group-hover:w-full transition-all duration-500"></div>
+                    </div>
+                  </div>
+                )}
+              </FadeIn>
+            );
+          })}
         </div>
       </Section>
 
       {/* Contact Section */}
       <Section id="contact" className="mb-20">
         <div className="relative bg-gradient-to-br from-gray-900 to-gray-800 text-white p-12 md:p-24 overflow-hidden rounded-sm">
-           {/* Abstract Decoration */}
-           <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-           
-           <div className="relative z-10 flex flex-col md:flex-row justify-between items-center gap-12">
-             <div className="text-center md:text-left">
-               <h2 className="font-cinzel text-3xl md:text-5xl mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-400">
-                 Start Your Moment
-               </h2>
-               <p className="text-gray-400 font-lato tracking-wide">
-                 未来の確かな舞台へ。
-               </p>
-             </div>
-             
-             <a href="mailto:contact@momentory.com" className="group relative px-8 py-4 border border-gray-600 hover:border-white transition-all duration-300 overflow-hidden">
-                <span className="relative z-10 font-lato tracking-[0.2em] text-sm group-hover:text-black transition-colors duration-300">
-                  CONTACT US
-                </span>
-                <div className="absolute inset-0 bg-white transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out"></div>
-             </a>
-           </div>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+
+          <div className="relative z-10 flex flex-col md:flex-row justify-between items-center gap-12">
+            <div className="text-center md:text-left">
+              <h2 className="font-cinzel text-3xl md:text-5xl mb-4 text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-400">
+                Start Your Moment
+              </h2>
+              <p className="text-gray-400 font-lato tracking-wide">未来の確かな舞台へ。</p>
+            </div>
+
+            <a
+              href="mailto:contact@momentory.com"
+              className="group relative px-8 py-4 border border-gray-600 hover:border-white transition-all duration-300 overflow-hidden"
+            >
+              <span className="relative z-10 font-lato tracking-[0.2em] text-sm group-hover:text-black transition-colors duration-300">
+                CONTACT US
+              </span>
+              <div className="absolute inset-0 bg-white transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out"></div>
+            </a>
+          </div>
         </div>
       </Section>
 
