@@ -441,7 +441,7 @@ const App: React.FC = () => {
             </div>
 
             <a
-              href="mailto:contact@momentory.com"
+              href="mailto:momentry.com@gmail.com"
               className="group relative px-8 py-4 border border-gray-600 hover:border-white transition-all duration-300 overflow-hidden"
             >
               <span className="relative z-10 font-lato tracking-[0.2em] text-sm group-hover:text-black transition-colors duration-300">
