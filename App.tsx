@@ -425,8 +425,26 @@ title: (
                       {service.title}
                     </h3>
 
-                    <p className="text-gray-500 text-sm leading-relaxed whitespace-pre-line">
+                    {/* PC用 */}
+{/* PC用 */}
+<p className="text-gray-500 text-sm leading-relaxed whitespace-pre-line hidden md:block">
   {service.summary}
+</p>
+
+{/* スマホ用（service3だけ） */}
+{service.id === "service3" && (
+  <p className="text-gray-500 text-sm leading-relaxed md:hidden">
+    知識・経験・ノウハウを<br />
+    「価値ある商品」として、<br />
+    市場に届けるための支援を行います。
+  </p>
+)}
+
+
+{/* スマホ用 */}
+<p className="text-gray-500 text-sm leading-relaxed md:hidden">
+  再現性を高めるためのオンラインで<br />
+  学べる環境を提供しています。
 </p>
                     <div className="mt-6 flex items-center justify-center gap-2 text-xs tracking-[0.25em] uppercase text-gray-400">
                       <span>{isOpen ? "Close" : "Details"}</span>
@@ -454,7 +472,22 @@ title: (
                         </div>
                         <ul className="list-disc pl-5 space-y-2 text-gray-700 text-left">
   {service.bullets?.map((item, idx) => (
-    <li key={idx}>{item}</li>
+    <li key={idx}>
+      {service.id === "service1" && idx === 0 ? (
+        <>
+          {/* PC用 */}
+          <span className="hidden md:block">{item}</span>
+
+          {/* スマホ用 */}
+          <span className="md:hidden">
+            会員専用サイトでの学習コンテンツ配信<br />
+            （動画・テキスト）
+          </span>
+        </>
+      ) : (
+        item
+      )}
+    </li>
   ))}
 </ul>
                       </div>
