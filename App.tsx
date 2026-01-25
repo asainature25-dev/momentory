@@ -102,7 +102,8 @@ const Section: React.FC<{ id?: string; className?: string; children: React.React
 type Service = {
   id: string;
   no: "01" | "02" | "03";
-  title: string;
+  title: React.ReactNode; // 画面に表示する用（改行・装飾OK）
+titleText: string;      // img alt 用（文字列専用）
   image: string;
 
   // カードの短文（最初に見えるやつ）
@@ -112,7 +113,8 @@ type Service = {
   body: string;
 
   bulletsTitle?: string;
-  bullets?: string[];
+  bullets?: React.ReactNode[];
+
 
   noteTitle?: string;
   note?: string;
@@ -134,33 +136,54 @@ const App: React.FC = () => {
       {
         id: "service1",
         no: "01",
-        title: "オンライン学習塾の運営（FX専門教育）",
+        titleText: "オンライン学習塾の運営（FX専門教育）",
+title: (
+  <span className="block text-center leading-snug">
+    オンライン学習塾の運営<br />
+    <span className="text-sm opacity-80">（FX専門教育）</span>
+  </span>
+),
         image: "/services1.jpg",
-        summary: "FXを再現可能なスキルとして身につけるためのオンライン学習環境を提供します。",
-        body: `会員専用サイト内にて、動画・テキストなどの学習コンテンツを一括管理・配信。
-学習だけで終わらせず、会員様からの質問や相談に対しても細かな内容まで精査し、
-適切な投資活動が行えるよう継続的なサポートを行います。`,
+        summary: `再現性を高めるためのオンライン学習環境を
+提供しています。`,
+        body: `会員専用サイト内では、動画・テキストなどの学習コンテンツを一括で管理。
+
+学習して終わりではなく、会員様からの質問や相談にも一つ一つ丁寧に対応し、ご自身で判断できる力を養うためのサポートを行います。
+
+初心者の方から、既にトレード経験のある方まで、段階的に学べるカリキュラム設計で、無理なくスキルを定着させて行きます。
+
+本サービスは、特定の利益や成果を保証するものではありませんが、相場分析やリスク管理、投資判断に必要な知識と考え方を段階的に学べるカリキュラムを提供しています。
+
+なお、投資助言・投資判断の代行を行うものではなく、あくまで教育・学習を目的としたものです。`,
+
         bulletsTitle: "提供内容",
         bullets: [
-          "会員専用サイトでの学習コンテンツ配信（動画・テキスト）",
-          "段階的に学べるカリキュラム設計",
-          "投資判断に関する質問対応・サポート",
-        ],
+  <span>
+    会員専用サイトでの学習コンテンツ配信<br />
+    （動画・テキスト）
+  </span>,
+  "段階的に学べるカリキュラム設計",
+  "投資判断に関する質問対応・サポート",
+],
         noteTitle: "運営事業",
         note: "FXの専門学校（オンライン）",
       },
       {
         id: "service2",
         no: "02",
-        title: "コンサルティング事業",
+        titleText: "コンサルティング事業",
+title: "コンサルティング事業",
         image: "/services2.jpg",
-        summary: "WEB集客・マネタイズ・経営戦略を軸に、事業の仕組みづくりを支援します。",
+        summary:`WEB集客・マネタイズ・経営戦略を軸に、
+事業の仕組みづくりを支援します。`,
         body: `個人・法人問わず、現状の課題を整理し、
-「何を」「どの順番で」「どのように実行するか」を明確にした上で、
-実行可能な戦略として落とし込みます。`,
+「何を」「どの順番で」「どのように実行するか」を明確にした上で、実行可能な戦略として落とし込みます。`,
         bulletsTitle: "主な支援内容",
         bullets: [
-          "WEB集客の戦略設計（SNS・広告・導線構築）",
+          <span>
+  WEB集客の戦略設計<br />
+  （SNS・広告・導線構築）
+</span>,
           "マネタイズ設計・商品設計",
           "経営・事業戦略に関するアドバイス",
           "仕組み化・再現性を重視した改善提案",
@@ -169,15 +192,22 @@ const App: React.FC = () => {
       {
         id: "service3",
         no: "03",
-        title: "コンテンツ販売・プロデュース事業",
+        titleText: "コンテンツ販売・プロデュース事業",
+title: (
+  <span className="block text-center leading-snug">
+    コンテンツ販売・<br />
+    <span className="inline-block mt-1">プロデュース事業</span>
+  </span>
+),
         image: "/services3.jpg",
-        summary: "知識・経験・ノウハウを「価値ある商品」として市場に届けるための支援を行います。",
+        summary: `知識・経験・ノウハウを「価値ある商品」
+として市場に届けるための支援を行います。`,
         body: `商品企画から、WEBマーケティングを活用した販売設計までを一貫して対応。
 文章・動画・音声など、目的に応じた形式でコンテンツを制作・販売します。`,
         bulletsTitle: "提供内容",
         bullets: [
           "コンテンツ・商品企画",
-          "販売導線の設計（WEB／SNS／動画）",
+          "販売導線の設計（WEB・SNS・動画）",
           "マーケティング視点での商品設計",
           "継続的に販売できる仕組みづくり",
         ],
@@ -281,9 +311,9 @@ const App: React.FC = () => {
 
   {/* PC用 */}
   <span className="hidden md:inline">
-    顧客が「良い・悪い」を判断する決定的瞬間。
-    Micro-moments：欲求が生まれ、行動する小さな瞬間。
-    私たちは、顧客の心が動く決定の瞬間をデザインします。
+    顧客が「良い・悪い」を判断する決定的瞬間。<br />
+    Micro-moments：欲求が生まれ、行動する小さな瞬間。<br />
+    私たちは、顧客の心が動く決定の瞬間をデザインします。<br />
   </span>
 </p>
 
@@ -314,8 +344,8 @@ const App: React.FC = () => {
 
   {/* PC用 */}
   <span className="hidden md:inline">
-    新しい市場への参入。顧客との接点・チャンスの入り口。
-    挑戦者を次のステージへ運ぶ「確かな入口」をつくります。
+    新しい市場への参入。顧客との接点・チャンスの入り口。<br />
+    挑戦者を次のステージへ運ぶ「確かな入口」をつくります。<br />
   </span>
 </p>
 
@@ -378,11 +408,11 @@ const App: React.FC = () => {
                   {/* image：文字なし */}
                   <div className="relative h-44 md:h-48 w-full">
                     <img
-                      src={service.image}
-                      alt={service.title}
-                      className="absolute inset-0 w-full h-full object-cover"
-                      loading="lazy"
-                    />
+  src={service.image}
+  alt={service.titleText}
+  className="absolute inset-0 w-full h-full object-cover"
+  loading="lazy"
+/>
                   </div>
 
                   {/* 画像の下：中央揃えでわかりやすく */}
@@ -395,10 +425,9 @@ const App: React.FC = () => {
                       {service.title}
                     </h3>
 
-                    <p className="text-gray-500 text-sm leading-relaxed">
-                      {service.summary}
-                    </p>
-
+                    <p className="text-gray-500 text-sm leading-relaxed whitespace-pre-line">
+  {service.summary}
+</p>
                     <div className="mt-6 flex items-center justify-center gap-2 text-xs tracking-[0.25em] uppercase text-gray-400">
                       <span>{isOpen ? "Close" : "Details"}</span>
                       <ChevronDown
@@ -424,10 +453,10 @@ const App: React.FC = () => {
                           {service.bulletsTitle}
                         </div>
                         <ul className="list-disc pl-5 space-y-2 text-gray-700 text-left">
-                          {(service.bullets ?? []).map((item) => (
-                            <li key={item}>{item}</li>
-                          ))}
-                        </ul>
+  {service.bullets?.map((item, idx) => (
+    <li key={idx}>{item}</li>
+  ))}
+</ul>
                       </div>
                     )}
 
