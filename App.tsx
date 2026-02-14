@@ -264,16 +264,31 @@ title: (
           <MetallicLogo size="xl" />
         </FadeIn>
 
-        <FadeIn delay={1000} className="absolute bottom-24 md:bottom-32 text-center px-4">
-          <h2 className="font-noto-serif text-sm md:text-base tracking-[0.2em] leading-loose text-gray-600">
-            決断という一瞬の輝きを、<br className="md:hidden" />
-            永続的な市場価値と、<br className="md:hidden" />
-            未来の確かな舞台に変える。
-          </h2>
-          <p className="mt-4 font-cinzel text-xs text-gray-400 tracking-widest">
-            Transforming the momentary brilliance of decision into lasting market value.
-          </p>
-        </FadeIn>
+       <FadeIn delay={1000} className="absolute bottom-24 md:bottom-32 text-center px-4">
+  <h2 className="font-noto-serif text-sm md:text-base tracking-[0.2em] leading-loose text-gray-600">
+    {/* スマホ用 */}
+    <span className="md:hidden">
+      「変わりたい」<br />
+      そう感じた、その瞬間から。<br /><br />
+      小さな決断を、<br />
+      未来の自信に。<br /><br />
+      私たちは、あなたと共に<br />
+      「なりたい」を叶えます。
+    </span>
+
+    {/* PC用 */}
+    <span className="hidden md:inline">
+      「変わりたい」そう感じた、その瞬間から。<br />
+      小さな決断を、未来の自信に。<br />
+      私たちは、あなたと共に「なりたい」を叶えます。
+    </span>
+  </h2>
+
+  <p className="mt-4 font-cinzel text-xs text-gray-400 tracking-widest">
+    From a single decision to your future.
+  </p>
+</FadeIn>
+
 
         <div className="absolute bottom-8 animate-bounce opacity-30">
           <ArrowDown size={20} />
