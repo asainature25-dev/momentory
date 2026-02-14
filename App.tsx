@@ -264,7 +264,11 @@ title: (
           <MetallicLogo size="xl" />
         </FadeIn>
 
-       <FadeIn delay={1000} className="absolute bottom-24 md:bottom-32 text-center px-4">
+       <FadeIn
+  delay={1000}
+  className="absolute bottom-12 md:bottom-32 text-center px-4"
+>
+
   <h2 className="font-noto-serif leading-relaxed text-center">
   {/* スマホ */}
   <span className="md:hidden block space-y-6">
