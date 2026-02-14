@@ -265,24 +265,38 @@ title: (
         </FadeIn>
 
        <FadeIn delay={1000} className="absolute bottom-24 md:bottom-32 text-center px-4">
-  <h2 className="font-noto-serif text-sm md:text-base tracking-[0.2em] leading-loose text-gray-600">
-    {/* スマホ用 */}
-    <span className="md:hidden">
-      「変わりたい」<br />
-      そう感じた、その瞬間から。<br /><br />
-      小さな決断を、<br />
-      未来の自信に。<br /><br />
-      私たちは、あなたと共に<br />
-      「なりたい」を叶えます。
+  <h2 className="font-noto-serif leading-relaxed text-center">
+  {/* スマホ */}
+  <span className="md:hidden block space-y-6">
+
+    <span className="block text-lg font-medium text-gray-800 tracking-wide">
+      「変わりたい」
     </span>
 
-    {/* PC用 */}
-    <span className="hidden md:inline">
-      「変わりたい」そう感じた、その瞬間から。<br />
-      小さな決断を、未来の自信に。<br />
-      私たちは、あなたと共に「なりたい」を叶えます。
+    <span className="block text-base text-gray-700">
+      そう感じた、その瞬間から。
     </span>
-  </h2>
+
+    <span className="block text-base font-medium text-gray-800">
+      小さな決断を、<br />
+      未来の自信に。
+    </span>
+
+    <span className="block text-base text-gray-800 pt-2">
+      私たちは、あなたと共に<br />
+      <span className="font-medium">「なりたい」</span>を叶えます。
+    </span>
+
+  </span>
+
+  {/* PC */}
+  <span className="hidden md:inline text-base text-gray-600 tracking-[0.2em]">
+    「変わりたい」そう感じた、その瞬間から。<br />
+    小さな決断を、未来の自信に。<br />
+    私たちは、あなたと共に「なりたい」を叶えます。
+  </span>
+</h2>
+
 
   <p className="mt-4 font-cinzel text-xs text-gray-400 tracking-widest">
     From a single decision to your future.
