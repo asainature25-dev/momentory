@@ -39,8 +39,8 @@ body{
 .hero img{
   width:100%;
   height:100%;
-  object-fit:cover;              /* ← 横いっぱい */
-  object-position:center 42%;    /* ← 人物位置調整（必要なら 35〜55%） */
+  object-fit:cover;
+  object-position:center 42%;
   display:block;
 }
 
@@ -55,37 +55,8 @@ body{
     linear-gradient(to bottom, rgba(255,255,255,.05), rgba(255,255,255,0));
 }
 
-/* タイトル */
-.hero-content{
-  position:absolute;
-  left:0; right:0;
-  bottom: clamp(24px, 5vw, 60px);
-  text-align:center;
-  z-index:2;
-  padding: 0 16px;
-}
-
-.hero-content .kicker{
-  letter-spacing:.4em;
-  font-size:12px;
-  color: rgba(47,59,76,.75);
-}
-
-.hero-content h1{
-  margin: 12px 0 10px;
-  font-size: clamp(30px, 6vw, 52px);
-  letter-spacing: .08em;
-  color: rgba(47,59,76,.92);
-}
-
-.hero-content p{
-  margin: 0;
-  font-size: clamp(14px, 2.5vw, 16px);
-  color: rgba(107,118,134,.9);
-}
-
 /* =========================
-   CONTENT（中央揃え・背景は触らない）
+   CONTENT（中央揃え）
    ========================= */
 .wrap{
   width: min(820px, 92vw);
@@ -167,14 +138,41 @@ footer{
   color: var(--sub);
   font-size: 13px;
 }
+
+/* =========================
+   MOBILE OPTIMIZE（スマホは画像を2/3くらい）
+   追加場所：styleの一番下（ここ）
+   ========================= */
+@media (max-width: 768px){
+  .hero{
+    height: 66vh;       /* 画面の約2/3 */
+    min-height: 340px;  /* 小さくなりすぎ防止 */
+    max-height: 520px;  /* 大きくなりすぎ防止 */
+  }
+
+  .hero img{
+    object-position: center 46%; /* スマホは少し下寄せ */
+  }
+
+  .wrap{
+    padding: 36px 0 72px; /* スマホの余白を少し詰める */
+  }
+
+  .section-title{
+    margin-bottom: 32px;
+  }
+
+  .prose p{
+    margin-bottom: 34px;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<header class="hero" aria-label="会社概要 ヒーロー">
+<header class="hero" aria-label="会社詳細 ヒーロー">
   <img src="/images/company-hero.jpg" alt="Momentory Hero">
-
 </header>
 
 <main class="wrap">
@@ -198,41 +196,4 @@ footer{
       行動に変えられないまま、<br>
       過ぎ去ってしまう。</p>
 
-    <p class="reveal">私たちは、その想いを<br>
-      未来へ進むための入口（Entry）に繋げます。</p>
-  </div>
-
-  <!-- TOP（指定URL）へ戻る -->
-  <div class="back-top reveal">
-    <a
-      href="https://momentory.pages.dev/company-profile.pdf"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="TOPページへ戻る（PDFを開きます）"
-    >
-      ← TOPページに戻る
-    </a>
-  </div>
-</main>
-
-<footer>© Momentory</footer>
-
-<script>
-const elements = document.querySelectorAll('.reveal');
-elements.forEach((el,i)=>{
-  el.style.transitionDelay = (i * 0.12) + "s";
-});
-
-const observer = new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add('show');
-    }
-  });
-},{threshold:0.15});
-
-elements.forEach(el=>observer.observe(el));
-</script>
-
-</body>
-</html>
+    <p class="reveal">私たちは、その想いを<br
