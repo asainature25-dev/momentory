@@ -8,36 +8,29 @@
 <style>
 :root{
   --bg:#eef2f7;
-  --bg2:#e3e9f2;
+  --bg2:#dfe6ef;
+  --bg3:#e9eff6;
   --text:#2f3b4c;
   --sub:#6b7686;
   --line: rgba(47,59,76,.22);
 }
 
 *{ box-sizing:border-box; }
-html,body{ margin:0; padding:0; height:100%; }
+html,body{ margin:0; padding:0; }
 
 body{
-  background: none; /* ← 背景は fixed レイヤーに置く */
+  /* ✅ グラデーションに戻す */
+  background:
+    radial-gradient(1200px 800px at 20% 0%, rgba(120,150,190,.18), transparent 60%),
+    radial-gradient(900px 700px at 90% 30%, rgba(160,180,210,.15), transparent 55%),
+    linear-gradient(to bottom, var(--bg), var(--bg2), var(--bg3));
   color: var(--text);
   font-family: "Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
   line-height: 2;
 }
 
-/* ✅ 背景ズレ対策：固定レイヤー */
-body::before{
-  content:"";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background:
-    radial-gradient(1200px 800px at 20% 0%, rgba(120,150,190,.15), transparent 60%),
-    radial-gradient(900px 700px at 90% 30%, rgba(160,180,210,.12), transparent 55%),
-    linear-gradient(to bottom, var(--bg), var(--bg2));
-}
-
 /* =========================
-   HERO（横いっぱい）
+   HERO
    ========================= */
 .hero{
   position: relative;
@@ -49,12 +42,11 @@ body::before{
 .hero img{
   width: 100%;
   height: 100%;
-  object-fit: cover;            /* 横いっぱい */
-  object-position: center 42%;  /* 人物位置 */
+  object-fit: cover;
+  object-position: center 42%;
   display: block;
 }
 
-/* 透明寄りの光（やりすぎない） */
 .hero::after{
   content:"";
   position:absolute;
@@ -66,7 +58,7 @@ body::before{
 }
 
 /* =========================
-   CONTENT（中央揃え）
+   CONTENT
    ========================= */
 .wrap{
   width: min(820px, 92vw);
@@ -91,7 +83,6 @@ body::before{
    ========================= */
 .back-top{
   margin: 56px 0 0;
-  text-align:center;
 }
 
 .back-top a{
@@ -105,38 +96,28 @@ body::before{
   text-decoration: none;
   color: rgba(47,59,76,.95);
   border: 1px solid var(--line);
-  background: rgba(255,255,255,.18);
-  backdrop-filter: blur(8px);
-  transition: transform .25s ease, background .25s ease, border-color .25s ease, color .25s ease;
+  background: rgba(255,255,255,.25);
+  backdrop-filter: blur(6px);
+  transition: .3s ease;
 }
 
 .back-top a:hover{
-  transform: translateY(-1px);
+  transform: translateY(-2px);
   background: rgba(47,59,76,.92);
-  border-color: rgba(47,59,76,.92);
   color: #fff;
 }
 
 /* =========================
-   SCROLL ANIMATION（控えめ）
+   SCROLL ANIMATION
    ========================= */
 .reveal{
   opacity: 0;
   transform: translateY(18px);
   transition: opacity .8s ease, transform .8s ease;
-  will-change: opacity, transform;
 }
 .reveal.show{
   opacity: 1;
   transform: translateY(0);
-}
-
-@media (prefers-reduced-motion: reduce){
-  .reveal{
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
 }
 
 /* =========================
@@ -150,19 +131,11 @@ footer{
 }
 
 /* =========================
-   MOBILE：ヒーローを「もう2回り」小さく＋vh暴れ対策
+   MOBILE（画像をさらに小さく）
    ========================= */
 @media (max-width: 768px){
   .hero{
-    /* 以前66vh → もっと小さく（だいたい半分ちょい） */
-    height: clamp(260px, 52vh, 420px);
-  }
-
-  /* iPhoneでvhが暴れにくい単位が使えるなら優先 */
-  @supports (height: 1svh){
-    .hero{
-      height: clamp(260px, 52svh, 420px);
-    }
+    height: clamp(240px, 50vh, 380px);
   }
 
   .hero img{
@@ -172,30 +145,18 @@ footer{
   .wrap{
     padding: 34px 0 72px;
   }
-
-  .section-title{
-    margin-bottom: 28px;
-  }
-
-  .prose p{
-    margin-bottom: 32px;
-  }
-
-  .back-top{
-    margin-top: 44px;
-  }
 }
 </style>
 </head>
 
 <body>
 
-<header class="hero" aria-label="会社詳細 ヒーロー">
+<header class="hero">
   <img src="/images/company-hero.jpg" alt="Momentory Hero">
 </header>
 
 <main class="wrap">
-  <h2 class="section-title reveal">Momentoryとは</h2>
+  <h2 class="section-title reveal">会社詳細</h2>
 
   <div class="prose">
     <p class="reveal">Momentoryは、<br>
@@ -220,12 +181,7 @@ footer{
   </div>
 
   <div class="back-top reveal">
-    <a
-      href="https://momentory.pages.dev/company-profile.pdf"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="TOPページへ戻る（PDFを開きます）"
-    >
+    <a href="https://momentory.pages.dev/company-profile.pdf" target="_blank">
       ← TOPページに戻る
     </a>
   </div>
