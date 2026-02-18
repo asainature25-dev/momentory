@@ -215,12 +215,15 @@ const App: React.FC = () => {
   id: "service3",
   no: "03",
 
-  titleText: "自分の経験を、価値あるカタチへ",
-  title: (
+ titleText: "自分の経験を、価値のあるカタチへ",
+
+title: (
   <span className="block text-center leading-snug text-lg md:text-xl">
-    自分の経験を、価値あるカタチへ
+    自分の経験を、<br />
+    価値のあるカタチへ
   </span>
 ),
+
 
 
   image: "/services3.jpg",
