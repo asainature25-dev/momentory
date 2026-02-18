@@ -65,6 +65,8 @@ const Navigation: React.FC<{
               { label: "会社理念", id: "philosophy" },
               { label: "運営紹介", href: "/operator.html" },
               { label: "サービス案内", id: "services" },
+              // ★追加：表セクション
+              { label: "変化の比較", id: "transformation" },
               { label: "問い合わせ", id: "contact" },
             ].map((item) => (
               <li key={item.id ?? item.href}>
@@ -122,9 +124,190 @@ type Service = {
   noteTitle?: string;
   note?: string;
 
-  // ★追加：ご利用にあたってのご案内
   disclaimerTitle?: string;
   disclaimer?: string[];
+};
+
+// ★追加：変化テーブル用データ
+type TransformRow = {
+  label: string; // 01｜状態 など
+  before: string[];
+  after: string[];
+};
+
+const transformationRows: TransformRow[] = [
+  {
+    label: "01｜状態",
+    before: [
+      "将来に対して漠然とした不安を抱えている",
+      "何か始めたい気持ちはあるが、自信が持てない",
+      "変わりたいと思いながらも、一歩を踏み出せずにいる",
+    ],
+    after: [
+      "自分の選択に確信を持てている",
+      "将来に対して具体的なビジョンを描けている",
+      "「変わりたい」が「変われる」に変わっている",
+    ],
+  },
+  {
+    label: "02｜学び",
+    before: [
+      "情報を集めるだけで、整理できていない",
+      "何が本質なのか判断できない",
+      "学びが実践に結びついていない",
+    ],
+    after: [
+      "本質を理解しながら学べている",
+      "自分で判断できる軸がある",
+      "学びがそのまま行動につながっている",
+    ],
+  },
+  {
+    label: "03｜行動",
+    before: [
+      "やりたいことはあるが、形にできていない",
+      "発信しているが、価値として届いていない",
+      "継続できず、途中で止まってしまう",
+    ],
+    after: [
+      "自分の経験を、価値として届けられている",
+      "必要としている人に届く仕組みがある",
+      "無理なく継続できる形で活動できている",
+    ],
+  },
+  {
+    label: "04｜将来",
+    before: [
+      "収入源が一つに依存している",
+      "将来の選択肢が限られている",
+      "自分の可能性を十分に活かせていない",
+    ],
+    after: [
+      "複数の収入の柱を持っている",
+      "自分の力で未来を設計できる",
+      "「選べる人生」を歩んでいる",
+    ],
+  },
+];
+
+// ★追加：比較セクション（スマホ=カード / PC=表）
+const TransformationSection: React.FC = () => {
+  return (
+    <Section id="transformation" className="bg-gray-50/40 border-t border-b border-gray-100">
+      <div className="flex flex-col items-center mb-12">
+        <span className="font-cinzel text-gray-400 tracking-[0.3em] mb-2">
+          TRANSFORMATION
+        </span>
+        <h2 className="font-serif text-3xl md:text-4xl text-gray-800">
+          Before / After
+        </h2>
+        <p className="mt-4 text-gray-600 text-sm md:text-base text-center max-w-2xl leading-relaxed space-y-2">
+  <span className="block">
+    学びを「知識」で終わらせず、行動に変える。
+  </span>
+  <span className="block">
+    Momentoryと出会った、あなたの変化を
+    <br className="hidden md:block" />
+    4つの観点で整理しました。
+  </span>
+</p>
+      </div>
+
+      {/* PC：テーブル */}
+      <div className="hidden md:block">
+        <div className="overflow-hidden rounded-sm border border-gray-200 bg-white/70 backdrop-blur-sm">
+          <table className="w-full text-left">
+            <thead className="bg-gray-900 text-white">
+              <tr>
+                <th className="p-5 text-xs tracking-[0.2em] font-lato uppercase w-[180px]">
+                  Item
+                </th>
+                <th className="p-5 text-xs tracking-[0.2em] font-lato uppercase">
+                  Before
+                </th>
+                <th className="p-5 text-xs tracking-[0.2em] font-lato uppercase">
+                  After
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {transformationRows.map((row, idx) => (
+                <tr
+                  key={row.label}
+                  className={`border-t border-gray-200 ${
+                    idx % 2 === 0 ? "bg-white/60" : "bg-white/40"
+                  }`}
+                >
+                  <td className="p-6 align-top">
+                    <div className="font-noto-serif text-sm md:text-base text-gray-900 tracking-wider">
+                      {row.label}
+                    </div>
+                  </td>
+
+                  <td className="p-6 align-top">
+                    <ul className="list-disc pl-5 space-y-2 text-gray-700 text-sm leading-relaxed">
+                      {row.before.map((t, i) => (
+                        <li key={i}>{t}</li>
+                      ))}
+                    </ul>
+                  </td>
+
+                  <td className="p-6 align-top">
+                    <ul className="list-disc pl-5 space-y-2 text-gray-900 text-sm leading-relaxed">
+                      {row.after.map((t, i) => (
+                        <li key={i}>{t}</li>
+                      ))}
+                    </ul>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* スマホ：カード */}
+      <div className="md:hidden space-y-6">
+        {transformationRows.map((row) => (
+          <div
+            key={row.label}
+            className="border border-gray-100 bg-white/60 backdrop-blur-sm p-6"
+          >
+            <div className="font-cinzel text-gray-300 text-2xl mb-2">
+              {row.label.split("｜")[0]}
+            </div>
+            <div className="font-noto-serif text-gray-900 tracking-wider mb-4">
+              {row.label.split("｜")[1]}
+            </div>
+
+            <div className="space-y-5">
+              <div>
+                <div className="text-xs tracking-[0.25em] uppercase text-gray-400 font-lato mb-2">
+                  Before
+                </div>
+                <ul className="list-disc pl-5 space-y-2 text-gray-700 text-sm leading-relaxed">
+                  {row.before.map((t, i) => (
+                    <li key={i}>{t}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="pt-4 border-t border-gray-200">
+                <div className="text-xs tracking-[0.25em] uppercase text-gray-400 font-lato mb-2">
+                  After
+                </div>
+                <ul className="list-disc pl-5 space-y-2 text-gray-900 text-sm leading-relaxed">
+                  {row.after.map((t, i) => (
+                    <li key={i}>{t}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
 };
 
 // --- App ---
@@ -163,7 +346,6 @@ const App: React.FC = () => {
 
         bulletsTitle: "提供内容",
         bullets: [
-          // ここは「スマホだけ改行」処理を後段の描画でやってるので文字列でOK
           "会員専用サイトでの学習コンテンツ配信（動画・テキスト）",
           "段階的に学べるカリキュラム設計",
           "投資判断に関する質問対応・サポート",
@@ -181,68 +363,63 @@ const App: React.FC = () => {
       },
 
       {
-  id: "service2",
-  no: "02",
+        id: "service2",
+        no: "02",
 
-  titleText: "「なりたい」を、仕事に。",
-  title: (
-    <span className="block text-center leading-snug">
-      「なりたい」を、仕事に。
-    </span>
-  ),
+        titleText: "「なりたい」を、仕事に。",
+        title: (
+          <span className="block text-center leading-snug">
+            「なりたい」を、仕事に。
+          </span>
+        ),
 
-  image: "/services2.jpg",
+        image: "/services2.jpg",
 
-  summary: `やりたいことはある。
+        summary: `やりたいことはある。
 でも、どう始めればいいか分からない。`,
 
-  body: `Momentoryは、あなたの想いを整理し、仕事や収入に繋がる形へ整えていきます。
+        body: `Momentoryは、あなたの想いを整理し、仕事や収入に繋がる形へ整えていきます。
 
 難しい理論や専門用語は使いません。
 今のあなたに必要な「次の一歩」が分かる状態を、一緒につくっていきます。`,
 
-  bulletsTitle: "支援内容",
-  bullets: [
-    "あなたの「やりたいこと」の言語化",
-    "SNSや発信の方向性設計",
-    "仕事・サービスの形づくり",
-    "無理なく続けられる仕組みづくり",
-  ],
-},
-
+        bulletsTitle: "支援内容",
+        bullets: [
+          "あなたの「やりたいこと」の言語化",
+          "SNSや発信の方向性設計",
+          "仕事・サービスの形づくり",
+          "無理なく続けられる仕組みづくり",
+        ],
+      },
 
       {
-  id: "service3",
-  no: "03",
+        id: "service3",
+        no: "03",
 
- titleText: "自分の経験を、価値のあるカタチへ",
+        titleText: "自分の経験を、価値のあるカタチへ",
+        title: (
+          <span className="block text-center leading-snug text-lg md:text-xl">
+            自分の経験を、<br />
+            価値のあるカタチへ
+          </span>
+        ),
 
-title: (
-  <span className="block text-center leading-snug text-lg md:text-xl">
-    自分の経験を、<br />
-    価値のあるカタチへ
-  </span>
-),
+        image: "/services3.jpg",
 
-
-
-  image: "/services3.jpg",
-
-  summary: `あなたの経験は、
+        summary: `あなたの経験は、
 誰かの未来を変える力を持っています。`,
 
-  body: `Momentoryでは、あなたの知識や経験を丁寧に整理し、必要としている人に届く形へ整えていきます。
+        body: `Momentoryでは、あなたの知識や経験を丁寧に整理し、必要としている人に届く形へ整えていきます。
 
 文章・動画・音声など、あなたに合った方法で表現し、価値を届けるところまで伴走します。`,
 
-  bulletsTitle: "提供内容",
-  bullets: [
-    "あなたの経験や学びを整理し、形にするサポート",
-    "必要としている人に届く流れの設計",
-    "継続的に価値を届けられる仕組みづくり",
-  ],
-},
-
+        bulletsTitle: "提供内容",
+        bullets: [
+          "あなたの経験や学びを整理し、形にするサポート",
+          "必要としている人に届く流れの設計",
+          "継続的に価値を届けられる仕組みづくり",
+        ],
+      },
     ],
     []
   );
@@ -547,11 +724,7 @@ title: (
 
                         <ul className="list-disc pl-5 space-y-2 text-gray-700 text-left">
                           {service.bullets.map((item, bIdx) => (
-                            <li key={bIdx}>
-                              
-                              {item}
-
-                            </li>
+                            <li key={bIdx}>{item}</li>
                           ))}
                         </ul>
                       </div>
@@ -567,7 +740,7 @@ title: (
                       </div>
                     ) : null}
 
-                    {/* ★disclaimer（ここが今回の追加） */}
+                    {/* disclaimer */}
                     {service.disclaimerTitle && service.disclaimer?.length ? (
                       <div className="pt-8 border-t border-gray-200">
                         <div className="font-semibold text-gray-800 tracking-widest text-xs mb-3 text-center">
@@ -592,6 +765,9 @@ title: (
           })}
         </div>
       </Section>
+
+      {/* ★ここに挿入：Services と Contact の間 */}
+      <TransformationSection />
 
       {/* Contact Section */}
       <Section id="contact" className="mb-20">
