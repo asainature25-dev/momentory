@@ -553,9 +553,7 @@ title: (
                                 <>
                                   <span className="hidden md:inline">{item}</span>
                                   <span className="md:hidden">
-                                    会員専用サイトでの学習コンテンツ配信
-                                    <br />
-                                    （動画・テキスト）
+                                    会員専用サイトでの学習コンテンツ配信（動画・テキスト）
                                   </span>
                                 </>
                               ) : (
