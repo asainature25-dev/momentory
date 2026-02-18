@@ -548,17 +548,9 @@ title: (
                         <ul className="list-disc pl-5 space-y-2 text-gray-700 text-left">
                           {service.bullets.map((item, bIdx) => (
                             <li key={bIdx}>
-                              {/* service1の1個目だけスマホで改行表示したい場合 */}
-                              {service.id === "service1" && bIdx === 0 ? (
-                                <>
-                                  <span className="hidden md:inline">{item}</span>
-                                  <span className="md:hidden">
-                                    会員専用サイトでの学習コンテンツ配信（動画・テキスト）
-                                  </span>
-                                </>
-                              ) : (
-                                item
-                              )}
+                              
+                              {item}
+
                             </li>
                           ))}
                         </ul>
