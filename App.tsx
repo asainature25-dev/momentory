@@ -217,10 +217,11 @@ const App: React.FC = () => {
 
   titleText: "自分の経験を、価値あるカタチへ",
   title: (
-    <span className="block text-center leading-snug">
-      自分の経験を、価値あるカタチへ
-    </span>
-  ),
+  <span className="block text-center leading-snug text-lg md:text-xl">
+    自分の経験を、価値あるカタチへ
+  </span>
+),
+
 
   image: "/services3.jpg",
 
