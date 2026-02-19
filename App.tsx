@@ -590,20 +590,21 @@ const App: React.FC = () => {
         <div className="container mx-auto px-6 text-center">
           <FadeIn>
             <p className="font-cinzel text-3xl md:text-5xl text-metallic leading-tight mb-12">
-              "Turning moments of decision <br /> into lasting market value."
+              "One decision can <br /> change everything."
             </p>
 
             <div className="space-y-6 text-gray-800">
               <p className="font-noto-serif text-lg md:text-2xl font-medium leading-relaxed">
-                若者の「なりたい」という決断を、
+                その小さな決断が、
                 <br className="md:hidden" />
-                社会に価値を生むマーケティング力へ。
+                あなたの未来を大きく動かす。
               </p>
-              <p className="font-noto-serif text-sm md:text-base text-gray-600 tracking-wider">夢を持つ人を、憧れを与える側へ導く。</p>
+              <p className="font-noto-serif text-sm md:text-base text-gray-600 tracking-wider">夢を追う側から、
+憧れを与える存在へ。</p>
             </div>
 
             <div className="mt-12 w-16 h-px bg-gray-400 mx-auto"></div>
-            <p className="mt-8 font-lato text-sm text-gray-500 tracking-[0.2em] uppercase">An emotional turning point for our customers.</p>
+            <p className="mt-8 font-lato text-sm text-gray-500 tracking-[0.2em] uppercase">Your emotional turning point starts here.</p>
           </FadeIn>
         </div>
       </section>
