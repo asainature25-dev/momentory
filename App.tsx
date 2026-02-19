@@ -274,10 +274,10 @@ const TransformationSection: React.FC = () => {
         <p className="mt-4 text-gray-600 text-sm md:text-base text-center max-w-2xl leading-relaxed space-y-2">
           <span className="block">学びを「知識」で終わらせず、行動に変える。</span>
           <span className="block">
-            Momentoryと出会った、あなたの変化を
-            <br className="hidden md:block" />
-            4つの観点で整理しました。
-          </span>
+  Momentoryと出会った、
+  <br className="md:hidden" />
+  あなたの変化を4つの観点で整理しました。
+</span>
         </p>
       </div>
 
