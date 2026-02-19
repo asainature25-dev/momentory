@@ -516,9 +516,13 @@ const App: React.FC = () => {
             </span>
           </h2>
 
-          <p className="mt-2 md:mt-4 font-cinzel text-sm md:text-xs text-gray-400 tracking-[0.2em]">
-  From a single decision to your future.
+          <p className="mt-2 md:mt-4 font-cinzel text-sm md:text-xs text-gray-400 tracking-[0.2em] leading-tight text-center">
+  FROM A SINGLE DECISION TO
+  <br className="md:hidden" />
+  YOUR FUTURE.
 </p>
+
+
 
 
         </FadeIn>
