@@ -493,7 +493,7 @@ const App: React.FC = () => {
 
         <FadeIn delay={1000} className="absolute bottom-12 md:bottom-32 text-center px-4">
           <h2 className="font-noto-serif leading-relaxed text-center">
-            <span className="md:hidden block space-y-5 text-sm">
+            <span className="md:hidden block space-y-4 text-sm">
               <span className="block font-medium text-gray-800">「変わりたい」</span>
               <span className="block text-gray-700">そう感じた、その瞬間から。</span>
               <span className="block font-medium text-gray-800">
@@ -516,12 +516,16 @@ const App: React.FC = () => {
             </span>
           </h2>
 
-          <p className="mt-4 font-cinzel text-xs text-gray-400 tracking-widest">From a single decision to your future.</p>
+          <p className="mt-2 md:mt-4 font-cinzel text-[11px] text-gray-400 tracking-[0.25em]">
+  From a single decision to your future.
+</p>
+
         </FadeIn>
 
-        <div className="absolute bottom-8 animate-bounce opacity-30">
-          <ArrowDown size={20} />
-        </div>
+        <div className="absolute bottom-3 md:bottom-8 animate-bounce opacity-30">
+  <ArrowDown size={20} />
+</div>
+
       </header>
 
       {/* Philosophy / Concept Section */}
