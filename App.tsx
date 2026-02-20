@@ -218,7 +218,7 @@ type Service = {
   title: React.ReactNode;
   titleText: string;
   image: string;
-  summary: string;
+  summary: string | React.ReactNode;
   body: string;
   bulletsTitle?: string;
   bullets?: React.ReactNode[];
@@ -388,7 +388,13 @@ const App: React.FC = () => {
           </span>
         ),
         image: "/services1.jpg",
-        summary: "会員専用サイト内で、動画・テキストなどの学習コンテンツを一括で管理。",
+        summary: (
+  <>
+    会員サイト内で、<br />
+    動画・テキストなどの学習コンテンツを<br />
+    一括で管理。
+  </>
+),
         body: `学んで終わりではなく、一人一人の理解度に寄り添ったサポートを行い、ご自身で判断できる力を育てます。
 
 初心者の方から、既にトレード経験のある方まで、段階的に学べるカリキュラム設計により、無理なくスキルを定着させていきます。`,
